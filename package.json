@@ -1,0 +1,44 @@
+{
+  "name": "mcp-server-toolkit",
+  "version": "1.0.0",
+  "description": "Collection of MCP (Model Context Protocol) servers for enterprise AI integrations — GitHub, Jira, PostgreSQL, Slack",
+  "author": "Quvantic <info@quvantic.com> (https://quvantic.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mustafaautomation/mcp-server-toolkit.git"
+  },
+  "homepage": "https://github.com/mustafaautomation/mcp-server-toolkit#readme",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"**/*.ts\"",
+    "format:check": "prettier --check \"**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "start:github": "ts-node src/servers/github/index.ts",
+    "start:jira": "ts-node src/servers/jira/index.ts",
+    "start:postgres": "ts-node src/servers/postgres/index.ts",
+    "start:slack": "ts-node src/servers/slack/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
