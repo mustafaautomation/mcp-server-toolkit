@@ -34,9 +34,9 @@ export const slackTools = {
     }),
     handler: async (input: { limit: number; types: string }) => {
       const client = createSlackClient();
-      const data = await client.get<{ channels: Array<{ id: string; name: string; num_members: number }> }>(
-        `/conversations.list?limit=${input.limit}&types=${input.types}`,
-      );
+      const data = await client.get<{
+        channels: Array<{ id: string; name: string; num_members: number }>;
+      }>(`/conversations.list?limit=${input.limit}&types=${input.types}`);
       return data.channels.map((c) => ({
         id: c.id,
         name: c.name,
@@ -53,7 +53,9 @@ export const slackTools = {
     }),
     handler: async (input: { query: string; count: number }) => {
       const client = createSlackClient();
-      return client.get(`/search.messages?query=${encodeURIComponent(input.query)}&count=${input.count}`);
+      return client.get(
+        `/search.messages?query=${encodeURIComponent(input.query)}&count=${input.count}`,
+      );
     },
   },
 };

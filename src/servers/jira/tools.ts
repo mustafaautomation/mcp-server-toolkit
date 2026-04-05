@@ -22,9 +22,12 @@ export const jiraTools = {
     }),
     handler: async (input: { jql: string; maxResults: number }) => {
       const client = createJiraClient();
-      const data = await client.get<{ issues: Array<{ key: string; fields: { summary: string; status: { name: string }; assignee?: { displayName: string } } }> }>(
-        `/search?jql=${encodeURIComponent(input.jql)}&maxResults=${input.maxResults}`,
-      );
+      const data = await client.get<{
+        issues: Array<{
+          key: string;
+          fields: { summary: string; status: { name: string }; assignee?: { displayName: string } };
+        }>;
+      }>(`/search?jql=${encodeURIComponent(input.jql)}&maxResults=${input.maxResults}`);
       return data.issues.map((i) => ({
         key: i.key,
         summary: i.fields.summary,
@@ -43,13 +46,27 @@ export const jiraTools = {
       issueType: z.enum(['Bug', 'Task', 'Story']).default('Task'),
       priority: z.enum(['Highest', 'High', 'Medium', 'Low', 'Lowest']).default('Medium'),
     }),
-    handler: async (input: { project: string; summary: string; description?: string; issueType: string; priority: string }) => {
+    handler: async (input: {
+      project: string;
+      summary: string;
+      description?: string;
+      issueType: string;
+      priority: string;
+    }) => {
       const client = createJiraClient();
       return client.post('/issue', {
         fields: {
           project: { key: input.project },
           summary: input.summary,
-          description: input.description ? { type: 'doc', version: 1, content: [{ type: 'paragraph', content: [{ type: 'text', text: input.description }] }] } : undefined,
+          description: input.description
+            ? {
+                type: 'doc',
+                version: 1,
+                content: [
+                  { type: 'paragraph', content: [{ type: 'text', text: input.description }] },
+                ],
+              }
+            : undefined,
           issuetype: { name: input.issueType },
           priority: { name: input.priority },
         },
@@ -68,7 +85,9 @@ export const jiraTools = {
       const transitions = await client.get<{ transitions: Array<{ id: string; name: string }> }>(
         `/issue/${input.issueKey}/transitions`,
       );
-      const target = transitions.transitions.find((t) => t.name.toLowerCase() === input.transitionName.toLowerCase());
+      const target = transitions.transitions.find(
+        (t) => t.name.toLowerCase() === input.transitionName.toLowerCase(),
+      );
       if (!target) throw new Error(`Transition "${input.transitionName}" not found`);
       await client.post(`/issue/${input.issueKey}/transitions`, { transition: { id: target.id } });
       return { success: true, issueKey: input.issueKey, newStatus: input.transitionName };

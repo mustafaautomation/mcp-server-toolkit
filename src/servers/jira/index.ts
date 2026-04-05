@@ -21,7 +21,13 @@ server.tool(
 server.tool(
   'create_issue',
   jiraTools.create_issue.description,
-  { project: z.string(), summary: z.string(), description: z.string().optional(), issueType: z.enum(['Bug', 'Task', 'Story']).default('Task'), priority: z.enum(['Highest', 'High', 'Medium', 'Low', 'Lowest']).default('Medium') },
+  {
+    project: z.string(),
+    summary: z.string(),
+    description: z.string().optional(),
+    issueType: z.enum(['Bug', 'Task', 'Story']).default('Task'),
+    priority: z.enum(['Highest', 'High', 'Medium', 'Low', 'Lowest']).default('Medium'),
+  },
   async (input) => {
     const result = await jiraTools.create_issue.handler(input);
     return { content: [{ type: 'text' as const, text: JSON.stringify(result, null, 2) }] };

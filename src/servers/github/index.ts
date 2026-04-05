@@ -12,7 +12,11 @@ const server = new McpServer({
 server.tool(
   'list_repos',
   githubTools.list_repos.description,
-  { owner: z.string(), type: z.enum(['all', 'public', 'private']).default('all'), per_page: z.number().default(30) },
+  {
+    owner: z.string(),
+    type: z.enum(['all', 'public', 'private']).default('all'),
+    per_page: z.number().default(30),
+  },
   async (input) => {
     const results = await githubTools.list_repos.handler(input);
     return { content: [{ type: 'text' as const, text: JSON.stringify(results, null, 2) }] };
@@ -32,7 +36,13 @@ server.tool(
 server.tool(
   'create_issue',
   githubTools.create_issue.description,
-  { owner: z.string(), repo: z.string(), title: z.string(), body: z.string().optional(), labels: z.array(z.string()).optional() },
+  {
+    owner: z.string(),
+    repo: z.string(),
+    title: z.string(),
+    body: z.string().optional(),
+    labels: z.array(z.string()).optional(),
+  },
   async (input) => {
     const result = await githubTools.create_issue.handler(input);
     return { content: [{ type: 'text' as const, text: JSON.stringify(result, null, 2) }] };

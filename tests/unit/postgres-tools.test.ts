@@ -3,9 +3,9 @@ import { postgresTools } from '../../src/servers/postgres/tools';
 
 describe('PostgreSQL Tools', () => {
   it('should reject non-SELECT queries', async () => {
-    await expect(
-      postgresTools.query.handler({ sql: 'DELETE FROM users' }),
-    ).rejects.toThrow('Only SELECT');
+    await expect(postgresTools.query.handler({ sql: 'DELETE FROM users' })).rejects.toThrow(
+      'Only SELECT',
+    );
   });
 
   it('should reject INSERT queries', async () => {
@@ -20,7 +20,9 @@ describe('PostgreSQL Tools', () => {
   });
 
   it('should accept WITH (CTE) queries', async () => {
-    const result = await postgresTools.query.handler({ sql: 'WITH cte AS (SELECT 1) SELECT * FROM cte' });
+    const result = await postgresTools.query.handler({
+      sql: 'WITH cte AS (SELECT 1) SELECT * FROM cte',
+    });
     expect(result.sql).toContain('WITH');
   });
 

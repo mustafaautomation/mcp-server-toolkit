@@ -15,9 +15,9 @@ export const githubTools = {
       per_page: z.number().default(30),
     }),
     handler: async (input: { owner: string; type: string; per_page: number }) => {
-      const repos = await client.get<Array<{ full_name: string; description: string; stargazers_count: number }>>(
-        `/users/${input.owner}/repos?type=${input.type}&per_page=${input.per_page}&sort=updated`,
-      );
+      const repos = await client.get<
+        Array<{ full_name: string; description: string; stargazers_count: number }>
+      >(`/users/${input.owner}/repos?type=${input.type}&per_page=${input.per_page}&sort=updated`);
       return repos.map((r) => ({
         name: r.full_name,
         description: r.description,
@@ -34,9 +34,9 @@ export const githubTools = {
       state: z.enum(['open', 'closed', 'all']).default('open'),
     }),
     handler: async (input: { owner: string; repo: string; state: string }) => {
-      const prs = await client.get<Array<{ number: number; title: string; user: { login: string }; state: string }>>(
-        `/repos/${input.owner}/${input.repo}/pulls?state=${input.state}`,
-      );
+      const prs = await client.get<
+        Array<{ number: number; title: string; user: { login: string }; state: string }>
+      >(`/repos/${input.owner}/${input.repo}/pulls?state=${input.state}`);
       return prs.map((pr) => ({
         number: pr.number,
         title: pr.title,
@@ -55,7 +55,13 @@ export const githubTools = {
       body: z.string().optional(),
       labels: z.array(z.string()).optional(),
     }),
-    handler: async (input: { owner: string; repo: string; title: string; body?: string; labels?: string[] }) => {
+    handler: async (input: {
+      owner: string;
+      repo: string;
+      title: string;
+      body?: string;
+      labels?: string[];
+    }) => {
       return client.post(`/repos/${input.owner}/${input.repo}/issues`, {
         title: input.title,
         body: input.body,
@@ -72,9 +78,15 @@ export const githubTools = {
       per_page: z.number().default(10),
     }),
     handler: async (input: { owner: string; repo: string; per_page: number }) => {
-      const data = await client.get<{ workflow_runs: Array<{ id: number; name: string; status: string; conclusion: string; created_at: string }> }>(
-        `/repos/${input.owner}/${input.repo}/actions/runs?per_page=${input.per_page}`,
-      );
+      const data = await client.get<{
+        workflow_runs: Array<{
+          id: number;
+          name: string;
+          status: string;
+          conclusion: string;
+          created_at: string;
+        }>;
+      }>(`/repos/${input.owner}/${input.repo}/actions/runs?per_page=${input.per_page}`);
       return data.workflow_runs.map((r) => ({
         id: r.id,
         name: r.name,

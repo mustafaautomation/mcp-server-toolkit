@@ -8,12 +8,19 @@ export const postgresTools = {
     description: 'Execute a read-only SQL query against PostgreSQL',
     inputSchema: z.object({
       sql: z.string().describe('SQL SELECT query to execute'),
-      params: z.array(z.unknown()).optional().describe('Query parameters for parameterized queries'),
+      params: z
+        .array(z.unknown())
+        .optional()
+        .describe('Query parameters for parameterized queries'),
     }),
     handler: async (input: { sql: string; params?: unknown[] }) => {
       // Validate read-only
       const normalized = input.sql.trim().toUpperCase();
-      if (!normalized.startsWith('SELECT') && !normalized.startsWith('WITH') && !normalized.startsWith('EXPLAIN')) {
+      if (
+        !normalized.startsWith('SELECT') &&
+        !normalized.startsWith('WITH') &&
+        !normalized.startsWith('EXPLAIN')
+      ) {
         throw new Error('Only SELECT, WITH, and EXPLAIN queries are allowed');
       }
 
