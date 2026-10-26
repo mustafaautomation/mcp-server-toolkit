@@ -3,7 +3,7 @@
 [![CI](https://github.com/mustafaautomation/mcp-server-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/mustafaautomation/mcp-server-toolkit/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-Compatible-FF6B35.svg)](https://modelcontextprotocol.io)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
 Collection of **Model Context Protocol (MCP)** servers written in TypeScript. Connect Claude, ChatGPT, or any MCP-compatible AI agent to GitHub, Jira, PostgreSQL, and Slack.
 
