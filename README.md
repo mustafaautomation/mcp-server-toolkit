@@ -5,7 +5,7 @@
 [![MCP](https://img.shields.io/badge/MCP-Compatible-FF6B35.svg)](https://modelcontextprotocol.io)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
-Collection of **Model Context Protocol (MCP)** servers for enterprise AI integrations. Connect Claude, ChatGPT, or any MCP-compatible AI agent to GitHub, Jira, PostgreSQL, and Slack.
+Collection of **Model Context Protocol (MCP)** servers written in TypeScript. Connect Claude, ChatGPT, or any MCP-compatible AI agent to GitHub, Jira, PostgreSQL, and Slack.
 
 ---
 
@@ -36,7 +36,8 @@ Collection of **Model Context Protocol (MCP)** servers for enterprise AI integra
 ```bash
 git clone https://github.com/mustafaautomation/mcp-server-toolkit.git
 cd mcp-server-toolkit
-npm install
+npm ci
+npm test        # 67 unit tests
 
 # Start a server
 GITHUB_TOKEN=ghp_xxx npx ts-node src/servers/github/index.ts
